@@ -1,348 +1,852 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Fortitude Learning Box</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <style>
-        :root {
-            --primary: #2563eb;
-            --secondary: #2dd4bf;
-            --accent: #f59e0b;
-            --light: #f8fafc;
-            --dark: #0f172a;
-            --gradient: linear-gradient(135deg, #2563eb 0%, #2dd4bf 100%);
-        }
-
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-            font-family: 'Inter', system-ui, -apple-system, sans-serif;
-        }
-
-        body {
-            line-height: 1.7;
-            color: var(--dark);
-            background: var(--light);
-            scroll-behavior: smooth;
-        }
-
-        /* Modern Header */
-        .header {
-            background: var(--gradient);
-            color: white;
-            padding: 6rem 2rem;
-            text-align: center;
-            position: relative;
-            overflow: hidden;
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .header::after {
-            content: '';
-            position: absolute;
-            bottom: -50px;
-            left: 0;
-            width: 100%;
-            height: 100px;
-            background: var(--light);
-            clip-path: ellipse(75% 100% at 50% 100%);
-        }
-
-        .hero {
-            max-width: 900px;
-            margin: 0 auto;
-            position: relative;
-            z-index: 1;
-        }
-
-        .hero h1 {
-            font-size: 3.5rem;
-            margin-bottom: 1.5rem;
-            line-height: 1.2;
-            text-shadow: 0 2px 4px rgba(0,0,0,0.1);
-            animation: fadeInUp 1s ease;
-        }
-
-        .hero p {
-            font-size: 1.25rem;
-            opacity: 0.9;
-            margin-bottom: 2rem;
-            animation: fadeInUp 1s ease 0.2s;
-            animation-fill-mode: backwards;
-        }
-
-        /* Modern Card Grid */
-        .cards {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
-            padding: 4rem 2rem;
-            max-width: 1200px;
-            margin: 0 auto;
-            position: relative;
-            z-index: 2;
-        }
-
-        .card {
-            background: rgba(255, 255, 255, 0.95);
-            padding: 2rem;
-            border-radius: 1.5rem;
-            box-shadow: 0 8px 32px rgba(0,0,0,0.1);
-            transition: transform 0.3s ease, box-shadow 0.3s ease, opacity 0.3s ease;
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255,255,255,0.3);
-            text-align: center;
-            opacity: 0;
-            transform: translateY(20px);
-        }
-
-        .card.visible {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        .card:hover {
-            transform: translateY(-10px) scale(1.02);
-            box-shadow: 0 12px 40px rgba(0,0,0,0.15);
-        }
-
-        .card-icon {
-            font-size: 2.5rem;
-            color: var(--primary);
-            margin-bottom: 1.5rem;
-            display: inline-block;
-            padding: 1rem;
-            border-radius: 50%;
-            background: rgba(37, 99, 235, 0.1);
-            transition: transform 0.3s ease;
-        }
-
-        .card:hover .card-icon {
-            transform: rotate(15deg) scale(1.1);
-        }
-
-        /* Vision Section */
-        .vision {
-            padding: 6rem 2rem;
-            text-align: center;
-            background: white;
-            margin: 4rem auto;
-            max-width: 1000px;
-            border-radius: 1.5rem;
-            box-shadow: 0 8px 32px rgba(0,0,0,0.1);
-        }
-
-        .vision h2 {
-            font-size: 2.5rem;
-            margin-bottom: 2rem;
-            color: var(--dark);
-            position: relative;
-            display: inline-block;
-        }
-
-        .vision h2::after {
-            content: '';
-            position: absolute;
-            bottom: -10px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 60px;
-            height: 4px;
-            background: var(--accent);
-            border-radius: 2px;
-        }
-
-        .vision p {
-            font-size: 1.1rem;
-            max-width: 800px;
-            margin: 0 auto 2rem;
-            line-height: 1.8;
-            color: #4b5563;
-        }
-
-        .vision-list {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 2rem;
-            margin-top: 3rem;
-        }
-
-        .vision-item {
-            background: var(--light);
-            padding: 1.5rem;
-            border-radius: 1rem;
-            text-align: left;
-            transition: transform 0.3s ease;
-        }
-
-        .vision-item:hover {
-            transform: translateY(-5px);
-        }
-
-        .vision-item i {
-            font-size: 1.5rem;
-            color: var(--primary);
-            margin-bottom: 1rem;
-            display: inline-block;
-        }
-
-        .vision-item h3 {
-            font-size: 1.25rem;
-            margin-bottom: 0.75rem;
-            color: var(--dark);
-        }
-
-        .vision-item p {
-            font-size: 0.95rem;
-            color: #64748b;
-        }
-
-        /* Interactive Features */
-        .cta-button {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            padding: 1rem 2rem;
-            background: var(--gradient);
-            color: white;
-            border-radius: 50px;
-            text-decoration: none;
-            font-weight: 600;
-            transition: transform 0.3s ease;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-        }
-
-        .cta-button:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 12px rgba(0,0,0,0.15);
-        }
-
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        /* Responsive Design */
-        @media (max-width: 768px) {
-            .hero h1 {
-                font-size: 2.5rem;
-            }
-            
-            .cards {
-                grid-template-columns: 1fr;
-                margin-top: -2rem;
-            }
-        }
-    </style>
+    <title>Fortitude Learning Box - EU Project</title>
+    <meta name="description"
+        content="Fortitude Learning Box: EU-funded project bringing digital education to Karenni communities with 20+ Raspberry Pi units, 300 tablets, and solar-powered infrastructure.">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
+
 <body>
-    <header class="header">
-        <div class="hero">
-            <h1>Welcome to the Fortitude Learning Box</h1>
-            <p>Empowering the People of Karenni, Youth, and IDPs with Resilience through Formal and Non-Formal Education. Start your journey toward growth and success today.</p>
-            <a href="#cards-section" class="cta-button" id="start-learning">
-                <i class="fas fa-book-open"></i>
-                Start Learning
-            </a>
+
+    <!-- Cookie Consent Banner -->
+    <div id="cookie-consent" class="cookie-banner" style="display: none;">
+        <div class="cookie-content">
+            <p><i class="fas fa-cookie-bite"></i> <span data-i18n="cookie-message">This website uses cookies to ensure
+                    you get the best experience. By continuing to use this site, you accept our use of cookies.</span>
+            </p>
+            <div class="cookie-buttons">
+                <button id="accept-cookies" class="btn btn-primary"><span
+                        data-i18n="cookie-accept">Accept</span></button>
+                <button id="decline-cookies" class="btn btn-secondary"><span
+                        data-i18n="cookie-decline">Decline</span></button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Skip to main content (Accessibility) -->
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="container">
+            <div class="nav-brand">
+                <a href="#" class="logo">
+                    <img src="assets/images/fortitude-logo.png" alt="Fortitude Learning Box Logo">
+                </a>
+                <a href="#" class="logo-partner">
+                    <img src="assets/images/fed-logo.jpg" alt="FED Partner Logo">
+                </a>
+            </div>
+
+            <ul class="nav-links">
+                <li><a href="#about" data-i18n="nav-about">About</a></li>
+                <li><a href="#gallery" data-i18n="nav-gallery">Gallery</a></li>
+                <li><a href="#infrastructure" data-i18n="nav-infrastructure">Infrastructure</a></li>
+                <li><a href="#timeline" data-i18n="nav-timeline">Timeline</a></li>
+                <li><a href="#impact" data-i18n="nav-impact">Impact</a></li>
+                <li><a href="#success-stories" data-i18n="nav-success">Success</a></li>
+                <li><a href="#future-innovations" data-i18n="nav-future">Future</a></li>
+                <li><a href="#contact" data-i18n="nav-contact">Contact</a></li>
+            </ul>
+
+            <div class="nav-actions">
+                <div class="language-switcher">
+                    <button class="lang-btn active" data-lang="en" aria-label="Switch to English">EN</button>
+                    <button class="lang-btn" data-lang="my" aria-label="Switch to Myanmar">MY</button>
+                </div>
+            </div>
+
+            <div class="hamburger" aria-label="Toggle menu" role="button" tabindex="0">
+                <i class="fas fa-bars"></i>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <header class="hero" id="home" role="banner">
+        <div class="hero-overlay"></div>
+        <div class="container hero-content">
+            <h1 data-i18n="hero-title">Empowering Karenni Communities Through Digital Education</h1>
+            <p data-i18n="hero-subtitle">Myanmar Humanitarian Fund (UNOCHA) supported project bringing offline-first
+                learning to remote areas with 20+ Raspberry Pi units, 300 tablets, and sustainable solar infrastructure
+            </p>
+            <div class="hero-stats">
+                <div class="stat-item">
+                    <i class="fas fa-microchip"></i>
+                    <span class="stat-number">20+</span>
+                    <span class="stat-label" data-i18n="stat-raspberry">Raspberry Pi Units</span>
+                </div>
+                <div class="stat-item">
+                    <i class="fas fa-tablet-alt"></i>
+                    <span class="stat-number">300</span>
+                    <span class="stat-label" data-i18n="stat-tablets">Tablets</span>
+                </div>
+                <div class="stat-item">
+                    <i class="fas fa-satellite-dish"></i>
+                    <span class="stat-number">3</span>
+                    <span class="stat-label" data-i18n="stat-hubs">Starlink Hubs</span>
+                </div>
+            </div>
+            <a href="#report" class="btn btn-primary btn-large"><i class="fas fa-download"></i> <span
+                    data-i18n="hero-cta">Download Full Report</span></a>
         </div>
     </header>
 
-    <main>
-        <!-- Cards Section -->
-        <section id="cards-section" class="cards">
-            <div class="card">
-                <i class="fas fa-laptop-code card-icon"></i>
-                <h3>COURSES</h3>
-                <p>Explore a variety of courses designed for your learning journey.</p>
-            </div>
-            
-            <div class="card">
-                <i class="fas fa-book card-icon"></i>
-                <h3>Mini Library</h3>
-                <p>Access a collection of resources to support your learning.</p>
-            </div>
-            
-            <div class="card">
-                <i class="fas fa-headphones card-icon"></i>
-                <h3>Audio Book</h3>
-                <p>Listen to engaging audio books anytime, anywhere.</p>
+    <main id="main-content">
+
+        <!-- About Section -->
+        <section id="about" class="section">
+            <div class="container">
+                <h2 class="section-title" data-i18n="about-title">About the Project</h2>
+                <div class="about-content">
+                    <div class="about-text">
+                        <p data-i18n="about-p1">The Fortitude Learning Box is a Myanmar Humanitarian Fund (UNOCHA)
+                            supported initiative designed to bridge the digital divide in Karenni communities. Our
+                            mission is to provide accessible, offline-first digital education solutions to remote areas
+                            where traditional internet connectivity is limited or unavailable.</p>
+                        <p data-i18n="about-p2">Through innovative use of Raspberry Pi technology, solar power, and
+                            satellite connectivity, we've established three learning centers serving hundreds of
+                            students with comprehensive educational resources including textbooks, interactive courses,
+                            audio books, and multimedia content.</p>
+                        <p data-i18n="about-p3"><strong>Future expansion and digital education improvements require
+                                significant budget investment.</strong> We are seeking additional funding support to
+                            scale operations, develop localized content, and enhance infrastructure across more
+                            communities.</p>
+                    </div>
+                    <div class="about-image">
+                        <img src="assets/images/installation-diagram.png"
+                            alt="Fortitude Learning Box Installation Architecture" loading="lazy">
+                    </div>
+                </div>
             </div>
         </section>
 
-        <!-- Vision Section -->
-        <section class="vision">
-            <h2>Our Vision</h2>
-            <p>Combining traditional knowledge with modern technology to create sustainable learning opportunities for all Karenni people. We envision a future where every individual, regardless of their background, has access to quality education and the tools to thrive in a rapidly changing world.</p>
-            <div class="vision-list">
-                <div class="vision-item">
-                    <i class="fas fa-hand-holding-heart"></i>
-                    <h3>Empowerment</h3>
-                    <p>We empower individuals through education, fostering resilience and self-reliance.</p>
+        <!-- Photo Gallery Section -->
+        <section id="gallery" class="section bg-light">
+            <div class="container">
+                <h2 class="section-title" data-i18n="gallery-title">Photo Gallery</h2>
+                <p class="section-subtitle" data-i18n="gallery-subtitle">Capturing moments of learning, growth, and
+                    community impact</p>
+
+                <div class="gallery-filters">
+                    <button class="filter-btn active" data-filter="all" data-i18n="filter-all">All</button>
+                    <button class="filter-btn" data-filter="students" data-i18n="filter-students">Students
+                        Learning</button>
+                    <button class="filter-btn" data-filter="community" data-i18n="filter-community">Community</button>
+                    <button class="filter-btn" data-filter="technology"
+                        data-i18n="filter-technology">Technology</button>
+                    <button class="filter-btn" data-filter="impact" data-i18n="filter-impact">Impact</button>
                 </div>
-                <div class="vision-item">
-                    <i class="fas fa-globe"></i>
-                    <h3>Inclusivity</h3>
-                    <p>We ensure that education is accessible to all, including youth and IDPs.</p>
-                </div>
-                <div class="vision-item">
-                    <i class="fas fa-lightbulb"></i>
-                    <h3>Innovation</h3>
-                    <p>We leverage modern technology to enhance learning experiences.</p>
-                </div>
-                <div class="vision-item">
-                    <i class="fas fa-users"></i>
-                    <h3>Community</h3>
-                    <p>We build strong, supportive communities through collaborative learning.</p>
+
+                <div class="gallery-grid">
+                    <!-- Students Learning -->
+                    <div class="gallery-item" data-category="students">
+                        <img src="assets/images/gallery/students-learning-01.jpg"
+                            alt="Students engaged in digital learning" loading="lazy">
+                        <div class="gallery-overlay">
+                            <i class="fas fa-search-plus"></i>
+                        </div>
+                    </div>
+                    <div class="gallery-item" data-category="students">
+                        <img src="assets/images/gallery/students-learning-02.jpg" alt="Interactive classroom session"
+                            loading="lazy">
+                        <div class="gallery-overlay">
+                            <i class="fas fa-search-plus"></i>
+                        </div>
+                    </div>
+                    <div class="gallery-item" data-category="students">
+                        <img src="assets/images/gallery/students-learning-03.jpg"
+                            alt="Students using tablets for learning" loading="lazy">
+                        <div class="gallery-overlay">
+                            <i class="fas fa-search-plus"></i>
+                        </div>
+                    </div>
+                    <div class="gallery-item" data-category="students">
+                        <img src="assets/images/gallery/students-learning-04.jpg"
+                            alt="Collaborative learning environment" loading="lazy">
+                        <div class="gallery-overlay">
+                            <i class="fas fa-search-plus"></i>
+                        </div>
+                    </div>
+                    <div class="gallery-item" data-category="students">
+                        <img src="assets/images/gallery/students-learning-05.jpg" alt="Digital literacy training"
+                            loading="lazy">
+                        <div class="gallery-overlay">
+                            <i class="fas fa-search-plus"></i>
+                        </div>
+                    </div>
+                    <div class="gallery-item" data-category="students">
+                        <img src="assets/images/gallery/students-learning-06.jpg"
+                            alt="Students accessing educational content" loading="lazy">
+                        <div class="gallery-overlay">
+                            <i class="fas fa-search-plus"></i>
+                        </div>
+                    </div>
+
+                    <!-- Community -->
+                    <div class="gallery-item" data-category="community">
+                        <img src="assets/images/gallery/community-01.jpg" alt="Community engagement session"
+                            loading="lazy">
+                        <div class="gallery-overlay">
+                            <i class="fas fa-search-plus"></i>
+                        </div>
+                    </div>
+                    <div class="gallery-item" data-category="community">
+                        <img src="assets/images/gallery/community-02.jpg" alt="Local community participation"
+                            loading="lazy">
+                        <div class="gallery-overlay">
+                            <i class="fas fa-search-plus"></i>
+                        </div>
+                    </div>
+                    <div class="gallery-item" data-category="community">
+                        <img src="assets/images/gallery/community-03.jpg" alt="Community learning center"
+                            loading="lazy">
+                        <div class="gallery-overlay">
+                            <i class="fas fa-search-plus"></i>
+                        </div>
+                    </div>
+                    <div class="gallery-item" data-category="community">
+                        <img src="assets/images/gallery/community-04.jpg" alt="Community outreach program"
+                            loading="lazy">
+                        <div class="gallery-overlay">
+                            <i class="fas fa-search-plus"></i>
+                        </div>
+                    </div>
+
+                    <!-- Technology -->
+                    <div class="gallery-item" data-category="technology">
+                        <img src="assets/images/gallery/technology-01.jpg" alt="Raspberry Pi infrastructure setup"
+                            loading="lazy">
+                        <div class="gallery-overlay">
+                            <i class="fas fa-search-plus"></i>
+                        </div>
+                    </div>
+                    <div class="gallery-item" data-category="technology">
+                        <img src="assets/images/gallery/technology-02.jpg" alt="Solar panel installation"
+                            loading="lazy">
+                        <div class="gallery-overlay">
+                            <i class="fas fa-search-plus"></i>
+                        </div>
+                    </div>
+                    <div class="gallery-item" data-category="technology">
+                        <img src="assets/images/gallery/technology-03.jpg" alt="Network infrastructure" loading="lazy">
+                        <div class="gallery-overlay">
+                            <i class="fas fa-search-plus"></i>
+                        </div>
+                    </div>
+
+                    <!-- Impact -->
+                    <div class="gallery-item" data-category="impact">
+                        <img src="assets/images/gallery/impact-01.jpg" alt="Educational impact on students"
+                            loading="lazy">
+                        <div class="gallery-overlay">
+                            <i class="fas fa-search-plus"></i>
+                        </div>
+                    </div>
+                    <div class="gallery-item" data-category="impact">
+                        <img src="assets/images/gallery/impact-02.jpg" alt="Community transformation" loading="lazy">
+                        <div class="gallery-overlay">
+                            <i class="fas fa-search-plus"></i>
+                        </div>
+                    </div>
+                    <div class="gallery-item" data-category="impact">
+                        <img src="assets/images/gallery/impact-03.jpg" alt="Learning outcomes" loading="lazy">
+                        <div class="gallery-overlay">
+                            <i class="fas fa-search-plus"></i>
+                        </div>
+                    </div>
+                    <div class="gallery-item" data-category="impact">
+                        <img src="assets/images/gallery/impact-04.jpg" alt="Success stories" loading="lazy">
+                        <div class="gallery-overlay">
+                            <i class="fas fa-search-plus"></i>
+                        </div>
+                    </div>
+
+                    <!-- Welcome Screen -->
+                    <div class="gallery-item" data-category="technology">
+                        <img src="assets/images/welcome-screen.png" alt="Fortitude Learning Box Welcome Screen"
+                            loading="lazy">
+                        <div class="gallery-overlay">
+                            <i class="fas fa-search-plus"></i>
+                        </div>
+                    </div>
                 </div>
             </div>
         </section>
+
+        <!-- Infrastructure Section -->
+        <section id="infrastructure" class="section">
+            <div class="container">
+                <h2 class="section-title" data-i18n="infra-title">Technical Infrastructure</h2>
+                <p class="section-subtitle" data-i18n="infra-subtitle">Sustainable, scalable technology for
+                    offline-first education</p>
+
+                <div class="infra-grid">
+                    <div class="infra-card">
+                        <div class="infra-icon">
+                            <i class="fas fa-microchip"></i>
+                        </div>
+                        <h3 data-i18n="infra-rpi-title">20+ Raspberry Pi Units</h3>
+                        <p data-i18n="infra-rpi-desc">Raspberry Pi 4 (4GB RAM) serving as local content servers, running
+                            Moodle LMS and hosting educational resources offline</p>
+                    </div>
+
+                    <div class="infra-card">
+                        <div class="infra-icon">
+                            <i class="fas fa-tablet-alt"></i>
+                        </div>
+                        <h3 data-i18n="infra-tablets-title">300 Android Tablets</h3>
+                        <p data-i18n="infra-tablets-desc">Offline-capable tablets distributed to students for accessing
+                            educational content, textbooks, and interactive courses</p>
+                    </div>
+
+                    <div class="infra-card">
+                        <div class="infra-icon">
+                            <i class="fas fa-solar-panel"></i>
+                        </div>
+                        <h3 data-i18n="infra-solar-title">Solar Power Systems</h3>
+                        <p data-i18n="infra-solar-desc">Off-grid solar panel arrays providing sustainable, reliable
+                            power for all equipment in remote locations</p>
+                    </div>
+
+                    <div class="infra-card">
+                        <div class="infra-icon">
+                            <i class="fas fa-wifi"></i>
+                        </div>
+                        <h3 data-i18n="infra-wifi-title">WiFi Mesh Network</h3>
+                        <p data-i18n="infra-wifi-desc">Local WiFi routers creating mesh networks for device connectivity
+                            within learning centers</p>
+                    </div>
+
+                    <div class="infra-card">
+                        <div class="infra-icon">
+                            <i class="fas fa-satellite-dish"></i>
+                        </div>
+                        <h3 data-i18n="infra-starlink-title">3 Starlink Hubs</h3>
+                        <p data-i18n="infra-starlink-desc">Satellite internet connectivity for content updates and
+                            remote support across three learning centers</p>
+                    </div>
+
+                    <div class="infra-card">
+                        <div class="infra-icon">
+                            <i class="fas fa-book"></i>
+                        </div>
+                        <h3 data-i18n="infra-content-title">Comprehensive Content Library</h3>
+                        <p data-i18n="infra-content-desc">Textbooks (KG-Grade 12), comics, audio books, Moodle courses,
+                            and multimedia educational resources</p>
+                    </div>
+                </div>
+
+                <div class="architecture-diagram">
+                    <h3 data-i18n="infra-arch-title">System Architecture</h3>
+                    <img src="assets/images/installation-diagram.png"
+                        alt="Fortitude Learning Box System Architecture Diagram" loading="lazy">
+                </div>
+            </div>
+        </section>
+
+        <!-- Timeline Section -->
+        <section id="timeline" class="section bg-light">
+            <div class="container">
+                <h2 class="section-title" data-i18n="timeline-title">Project Timeline</h2>
+                <div class="timeline">
+                    <div class="timeline-item">
+                        <div class="timeline-marker"></div>
+                        <div class="timeline-content">
+                            <div class="timeline-date" data-i18n="phase1-date">Q1 2025</div>
+                            <h3 data-i18n="phase1-title">Phase 1: Project Initiation</h3>
+                            <p data-i18n="phase1-desc">Needs assessment, community consultations, team formation, and
+                                initial resource planning with EU funding approval</p>
+                            <div class="timeline-photo">
+                                <img src="assets/images/team/volunteers-01.jpg" alt="Project team planning session"
+                                    loading="lazy">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="timeline-item">
+                        <div class="timeline-marker"></div>
+                        <div class="timeline-content">
+                            <div class="timeline-date" data-i18n="phase2-date">Q2 2025</div>
+                            <h3 data-i18n="phase2-title">Phase 2: Infrastructure Deployment</h3>
+                            <p data-i18n="phase2-desc">Procurement and installation of 20+ Raspberry Pi units, 300
+                                tablets, solar panels, WiFi routers, and Starlink systems</p>
+                            <div class="timeline-photo">
+                                <img src="assets/images/gallery/technology-01.jpg" alt="Infrastructure installation"
+                                    loading="lazy">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="timeline-item">
+                        <div class="timeline-marker"></div>
+                        <div class="timeline-content">
+                            <div class="timeline-date" data-i18n="phase3-date">Q3 2025</div>
+                            <h3 data-i18n="phase3-title">Phase 3: Content Curation & LMS Setup</h3>
+                            <p data-i18n="phase3-desc">Gathering textbooks, developing audio content, configuring Moodle
+                                LMS, and creating offline-accessible educational resources</p>
+                            <div class="timeline-photo">
+                                <img src="assets/images/lms-login.png" alt="Moodle LMS configuration" loading="lazy">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="timeline-item">
+                        <div class="timeline-marker"></div>
+                        <div class="timeline-content">
+                            <div class="timeline-date" data-i18n="phase4-date">Q4 2025</div>
+                            <h3 data-i18n="phase4-title">Phase 4: Pilot Deployment</h3>
+                            <p data-i18n="phase4-desc">Initial rollout to 3 learning centers, teacher training, student
+                                onboarding, and feedback collection</p>
+                            <div class="timeline-photo">
+                                <img src="assets/images/gallery/students-learning-01.jpg"
+                                    alt="Students in pilot program" loading="lazy">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="timeline-item">
+                        <div class="timeline-marker"></div>
+                        <div class="timeline-content">
+                            <div class="timeline-date" data-i18n="phase5-date">Q1 2026</div>
+                            <h3 data-i18n="phase5-title">Phase 5: Evaluation & Expansion</h3>
+                            <p data-i18n="phase5-desc">Impact assessment, scaling to additional communities, continuous
+                                content updates, and sustainability planning</p>
+                            <div class="timeline-photo">
+                                <img src="assets/images/gallery/impact-01.jpg" alt="Project impact assessment"
+                                    loading="lazy">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Impact Section -->
+        <section id="impact" class="section">
+            <div class="container">
+                <h2 class="section-title" data-i18n="impact-title">Project Impact</h2>
+                <div class="impact-grid">
+                    <div class="impact-stat">
+                        <i class="fas fa-users"></i>
+                        <div class="impact-number">500+</div>
+                        <div class="impact-label" data-i18n="impact-students">Students Reached</div>
+                    </div>
+                    <div class="impact-stat">
+                        <i class="fas fa-school"></i>
+                        <div class="impact-number">3</div>
+                        <div class="impact-label" data-i18n="impact-centers">Learning Centers</div>
+                    </div>
+                    <div class="impact-stat">
+                        <i class="fas fa-book-open"></i>
+                        <div class="impact-number">1000+</div>
+                        <div class="impact-label" data-i18n="impact-resources">Educational Resources</div>
+                    </div>
+                    <div class="impact-stat">
+                        <i class="fas fa-leaf"></i>
+                        <div class="impact-number">100%</div>
+                        <div class="impact-label" data-i18n="impact-renewable">Renewable Energy</div>
+                    </div>
+                </div>
+
+                <!-- Detailed Impact Metrics -->
+                <div class="impact-details">
+                    <h3 data-i18n="impact-details-title">Measurable Impact & Outcomes</h3>
+                    <div class="metrics-grid">
+                        <div class="metric-card">
+                            <div class="metric-icon"><i class="fas fa-graduation-cap"></i></div>
+                            <div class="metric-value">85%</div>
+                            <div class="metric-label" data-i18n="metric-completion">Course Completion Rate</div>
+                            <p class="metric-desc" data-i18n="metric-completion-desc">Students successfully completing
+                                digital literacy courses</p>
+                        </div>
+                        <div class="metric-card">
+                            <div class="metric-icon"><i class="fas fa-clock"></i></div>
+                            <div class="metric-value">12,000+</div>
+                            <div class="metric-label" data-i18n="metric-hours">Learning Hours</div>
+                            <p class="metric-desc" data-i18n="metric-hours-desc">Total hours of educational content
+                                accessed</p>
+                        </div>
+                        <div class="metric-card">
+                            <div class="metric-icon"><i class="fas fa-users"></i></div>
+                            <div class="metric-value">45</div>
+                            <div class="metric-label" data-i18n="metric-teachers">Trained Teachers</div>
+                            <p class="metric-desc" data-i18n="metric-teachers-desc">Educators trained in digital
+                                teaching methods</p>
+                        </div>
+                        <div class="metric-card">
+                            <div class="metric-icon"><i class="fas fa-chart-line"></i></div>
+                            <div class="metric-value">92%</div>
+                            <div class="metric-label" data-i18n="metric-satisfaction">Satisfaction Rate</div>
+                            <p class="metric-desc" data-i18n="metric-satisfaction-desc">Students and parents reporting
+                                positive outcomes</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Success Stories Section -->
+        <section id="success-stories" class="section bg-light">
+            <div class="container">
+                <h2 class="section-title" data-i18n="success-title">Success Stories</h2>
+                <p class="section-subtitle" data-i18n="success-subtitle">Real impact on real lives - transforming
+                    education in Karenni communities</p>
+
+                <div class="stories-grid">
+                    <div class="story-card">
+                        <div class="story-image">
+                            <img src="assets/images/gallery/students-learning-01.jpg" alt="Student Success Story"
+                                loading="lazy">
+                            <div class="story-badge"><i class="fas fa-star"></i> <span
+                                    data-i18n="badge-student">Student</span></div>
+                        </div>
+                        <div class="story-content">
+                            <h3 data-i18n="story1-title">From Zero to Digital Literacy</h3>
+                            <p class="story-quote" data-i18n="story1-quote">"Before the Fortitude Learning Box, I had
+                                never used a computer. Now I can access textbooks, watch educational videos, and even
+                                help my younger siblings with their homework. This has opened up a whole new world for
+                                me."</p>
+                            <p class="story-author" data-i18n="story1-author">- Naw Paw, 16-year-old student</p>
+                            <div class="story-impact">
+                                <span class="impact-badge"><i class="fas fa-check-circle"></i> <span
+                                        data-i18n="story1-impact1">Completed 15 courses</span></span>
+                                <span class="impact-badge"><i class="fas fa-check-circle"></i> <span
+                                        data-i18n="story1-impact2">Improved grades by 40%</span></span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="story-card">
+                        <div class="story-image">
+                            <img src="assets/images/team/volunteers-01.jpg" alt="Teacher Success Story" loading="lazy">
+                            <div class="story-badge"><i class="fas fa-chalkboard-teacher"></i> <span
+                                    data-i18n="badge-teacher">Teacher</span></div>
+                        </div>
+                        <div class="story-content">
+                            <h3 data-i18n="story2-title">Empowering Educators with Technology</h3>
+                            <p class="story-quote" data-i18n="story2-quote">"The Fortitude Learning Box has
+                                revolutionized how I teach. With access to multimedia content and interactive courses, I
+                                can make lessons more engaging. Even without internet, we have everything we need."</p>
+                            <p class="story-author" data-i18n="story2-author">- Teacher Saw Htoo, Learning Center
+                                Coordinator</p>
+                            <div class="story-impact">
+                                <span class="impact-badge"><i class="fas fa-check-circle"></i> <span
+                                        data-i18n="story2-impact1">Trained 45 teachers</span></span>
+                                <span class="impact-badge"><i class="fas fa-check-circle"></i> <span
+                                        data-i18n="story2-impact2">Created 50+ lesson plans</span></span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="story-card">
+                        <div class="story-image">
+                            <img src="assets/images/gallery/community-01.jpg" alt="Community Impact Story"
+                                loading="lazy">
+                            <div class="story-badge"><i class="fas fa-home"></i> <span
+                                    data-i18n="badge-community">Community</span></div>
+                        </div>
+                        <div class="story-content">
+                            <h3 data-i18n="story3-title">Bridging the Digital Divide</h3>
+                            <p class="story-quote" data-i18n="story3-quote">"Our village was completely cut off from
+                                digital education. The solar-powered learning center has become the heart of our
+                                community. Children come here every day, and parents see real hope for their children's
+                                future."</p>
+                            <p class="story-author" data-i18n="story3-author">- Community Leader, Mae La Oon Camp</p>
+                            <div class="story-impact">
+                                <span class="impact-badge"><i class="fas fa-check-circle"></i> <span
+                                        data-i18n="story3-impact1">3 villages connected</span></span>
+                                <span class="impact-badge"><i class="fas fa-check-circle"></i> <span
+                                        data-i18n="story3-impact2">500+ families benefited</span></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Future Innovations Section -->
+        <section id="future-innovations" class="section">
+            <div class="container">
+                <h2 class="section-title" data-i18n="future-title">Future Innovations & Enhancements</h2>
+                <p class="section-subtitle" data-i18n="future-subtitle">Pioneering the next generation of offline-first
+                    education technology</p>
+
+                <div class="innovations-grid">
+                    <div class="innovation-card">
+                        <div class="innovation-icon">
+                            <i class="fas fa-graduation-cap"></i>
+                        </div>
+                        <h3 data-i18n="innovation1-title">360ed Platform Integration</h3>
+                        <p data-i18n="innovation1-desc">Currently integrated with 360ed learning management system
+                            providing comprehensive course management, student tracking, and standardized educational
+                            content aligned with national curriculum across all tablets.</p>
+                        <div class="innovation-timeline">
+                            <i class="fas fa-check-circle"></i> <span data-i18n="innovation1-timeline">Currently
+                                Implemented</span>
+                        </div>
+                    </div>
+
+                    <div class="innovation-card">
+                        <div class="innovation-icon">
+                            <i class="fas fa-language"></i>
+                        </div>
+                        <h3 data-i18n="innovation2-title">Local Language Integration</h3>
+                        <p data-i18n="innovation2-desc">Developing educational content in Karenni and other ethnic
+                            minority languages to preserve cultural identity while providing quality education in mother
+                            tongue languages.</p>
+                        <div class="innovation-timeline">
+                            <i class="fas fa-calendar-alt"></i> <span data-i18n="innovation2-timeline">2027-2029</span>
+                        </div>
+                    </div>
+
+                    <div class="innovation-card">
+                        <div class="innovation-icon">
+                            <i class="fas fa-clipboard-check"></i>
+                        </div>
+                        <h3 data-i18n="innovation3-title">Offline Examination System</h3>
+                        <p data-i18n="innovation3-desc">Comprehensive offline examination and assessment system
+                            currently in use through the Learning Box, enabling students to take standardized tests and
+                            receive certifications without internet dependency.</p>
+                        <div class="innovation-timeline">
+                            <i class="fas fa-check-circle"></i> <span data-i18n="innovation3-timeline">Currently In
+                                Use</span>
+                        </div>
+                    </div>
+
+                    <div class="innovation-card">
+                        <div class="innovation-icon">
+                            <i class="fas fa-hands-helping"></i>
+                        </div>
+                        <h3 data-i18n="innovation4-title">Community Equipment Donation</h3>
+                        <p data-i18n="innovation4-desc">After project completion, all Raspberry Pi units, tablets, solar
+                            panels, and infrastructure will be donated to local communities for continued educational
+                            use and community ownership.</p>
+                        <div class="innovation-timeline">
+                            <i class="fas fa-calendar-alt"></i> <span data-i18n="innovation4-timeline">Post-2026</span>
+                        </div>
+                    </div>
+
+                    <div class="innovation-card">
+                        <div class="innovation-icon">
+                            <i class="fas fa-satellite"></i>
+                        </div>
+                        <h3 data-i18n="innovation5-title">Expanded Connectivity</h3>
+                        <p data-i18n="innovation5-desc">Scaling to 10 additional learning centers with enhanced Starlink
+                            connectivity, reaching 2,000+ students across remote Karenni regions.</p>
+                        <div class="innovation-timeline">
+                            <i class="fas fa-calendar-alt"></i> <span data-i18n="innovation5-timeline">2027-2030</span>
+                        </div>
+                    </div>
+
+                    <div class="innovation-card">
+                        <div class="innovation-icon">
+                            <i class="fas fa-euro-sign"></i>
+                        </div>
+                        <h3 data-i18n="innovation6-title">Future Enhancement Budget</h3>
+                        <p data-i18n="innovation6-desc">Significant budget requirements needed for scaling operations,
+                            content development, and infrastructure expansion. Local communities will require external
+                            funding support for continued enhancements.</p>
+                        <div class="innovation-timeline">
+                            <i class="fas fa-calendar-alt"></i> <span data-i18n="innovation6-timeline">Ongoing</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Sustainability Plan -->
+                <div class="sustainability-section">
+                    <h3 data-i18n="sustainability-title">Long-term Sustainability</h3>
+                    <div class="sustainability-grid">
+                        <div class="sustainability-item">
+                            <i class="fas fa-users-cog"></i>
+                            <h4 data-i18n="sustain1-title">Local Capacity Building</h4>
+                            <p data-i18n="sustain1-desc">Training local technicians and educators to maintain and expand
+                                the system independently</p>
+                        </div>
+                        <div class="sustainability-item">
+                            <i class="fas fa-solar-panel"></i>
+                            <h4 data-i18n="sustain2-title">Renewable Energy</h4>
+                            <p data-i18n="sustain2-desc">100% solar-powered infrastructure with battery backup for 24/7
+                                operation</p>
+                        </div>
+                        <div class="sustainability-item">
+                            <i class="fas fa-handshake"></i>
+                            <h4 data-i18n="sustain3-title">Community Ownership</h4>
+                            <p data-i18n="sustain3-desc">Transferring management to local communities for long-term
+                                stewardship</p>
+                        </div>
+                        <div class="sustainability-item">
+                            <i class="fas fa-coins"></i>
+                            <h4 data-i18n="sustain4-title">Diverse Funding</h4>
+                            <p data-i18n="sustain4-desc">Securing partnerships with NGOs, governments, and private
+                                sector for continued support</p>
+                        </div>
+                        <div class="sustainability-item">
+                            <i class="fas fa-book-reader"></i>
+                            <h4 data-i18n="sustain5-title">Curriculum Development</h4>
+                            <p data-i18n="sustain5-desc">Continuous development of culturally relevant educational
+                                content aligned with national standards and local needs</p>
+                        </div>
+                        <div class="sustainability-item">
+                            <i class="fas fa-chalkboard-teacher"></i>
+                            <h4 data-i18n="sustain6-title">Teacher Training Programs</h4>
+                            <p data-i18n="sustain6-desc">Ongoing professional development for educators in digital
+                                pedagogy and offline-first teaching methodologies</p>
+                        </div>
+                        <div class="sustainability-item">
+                            <i class="fas fa-chart-line"></i>
+                            <h4 data-i18n="sustain7-title">Student Assessment Systems</h4>
+                            <p data-i18n="sustain7-desc">Implementing continuous assessment and progress tracking to
+                                ensure quality education outcomes and student success</p>
+                        </div>
+                        <div class="sustainability-item">
+                            <i class="fas fa-school"></i>
+                            <h4 data-i18n="sustain8-title">Community Learning Centers</h4>
+                            <p data-i18n="sustain8-desc">Establishing permanent learning centers that serve as
+                                educational hubs for lifelong learning and community development</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+        <!-- Report Section -->
+        <section id="report" class="section bg-light">
+            <div class="container text-center">
+                <h2 class="section-title" data-i18n="report-title">Project Documentation</h2>
+                <p class="section-subtitle" data-i18n="report-subtitle">Download comprehensive reports and presentations
+                </p>
+                <div class="report-box">
+                    <i class="fas fa-file-pdf fa-4x"></i>
+                    <h3 data-i18n="report-pdf-title">Fortitude Learning Box Report v2</h3>
+                    <p data-i18n="report-pdf-desc">Detailed project report with impact metrics, technical
+                        specifications, and evaluation results</p>
+                    <a href="assets/documents/report.pdf" class="btn btn-secondary" download><i
+                            class="fas fa-download"></i> <span data-i18n="report-download">Download PDF</span></a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact Us Section -->
+        <section id="contact" class="section">
+            <div class="container">
+                <h2 class="section-title" data-i18n="contact-title">Contact Us</h2>
+                <p class="section-subtitle" data-i18n="contact-subtitle">Get in touch for partnerships, funding
+                    opportunities, or project inquiries</p>
+
+                <div class="contact-content">
+                    <div class="contact-info">
+                        <div class="contact-card">
+                            <i class="fas fa-euro-sign"></i>
+                            <h3 data-i18n="contact-funding-title">Funding Requirements</h3>
+                            <p data-i18n="contact-funding-desc">We require significant budget investment to expand
+                                digital education infrastructure, develop localized content, and scale operations to
+                                reach more communities across Myanmar.</p>
+                        </div>
+                        <div class="contact-card">
+                            <i class="fas fa-handshake"></i>
+                            <h3 data-i18n="contact-partnership-title">Partnership Opportunities</h3>
+                            <p data-i18n="contact-partnership-desc">Collaborate with us to bring sustainable digital
+                                education solutions to underserved communities. We welcome NGOs, governments, and
+                                private sector partners.</p>
+                        </div>
+                        <div class="contact-card">
+                            <i class="fas fa-info-circle"></i>
+                            <h3 data-i18n="contact-info-title">Project Information</h3>
+                            <p data-i18n="contact-info-desc">Learn more about our offline-first learning approach,
+                                technical infrastructure, and community impact. We're happy to share our experience and
+                                insights.</p>
+                        </div>
+                    </div>
+
+                    <div class="contact-form-wrapper">
+                        <form class="contact-form" id="contactForm">
+                            <div class="form-group">
+                                <label for="name" data-i18n="form-name">Name *</label>
+                                <input type="text" id="name" name="name" required placeholder="Your full name">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="email" data-i18n="form-email">Email *</label>
+                                <input type="email" id="email" name="email" required
+                                    placeholder="your.email@example.com">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="organization" data-i18n="form-organization">Organization</label>
+                                <input type="text" id="organization" name="organization"
+                                    placeholder="Your organization name">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="subject" data-i18n="form-subject">Subject *</label>
+                                <select id="subject" name="subject" required>
+                                    <option value="" data-i18n="form-select">Select a subject</option>
+                                    <option value="funding" data-i18n="form-funding">Funding Opportunity</option>
+                                    <option value="partnership" data-i18n="form-partnership">Partnership Inquiry
+                                    </option>
+                                    <option value="technical" data-i18n="form-technical">Technical Information</option>
+                                    <option value="general" data-i18n="form-general">General Inquiry</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="message" data-i18n="form-message">Message *</label>
+                                <textarea id="message" name="message" rows="6" required
+                                    placeholder="Tell us about your inquiry..."></textarea>
+                            </div>
+
+                            <button type="submit" class="btn btn-primary">
+                                <i class="fas fa-paper-plane"></i> <span data-i18n="form-submit">Send Message</span>
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </section>
+
     </main>
 
-    <script>
-        // Smooth scroll to cards section
-        document.getElementById('start-learning').addEventListener('click', (e) => {
-            e.preventDefault();
-            const cardsSection = document.getElementById('cards-section');
-            cardsSection.scrollIntoView({ behavior: 'smooth' });
+    <!-- Footer -->
+    <footer role="contentinfo">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logos">
+                    <img src="assets/images/fortitude-logo.png" alt="Fortitude Learning Box" class="footer-logo-main">
+                    <img src="assets/images/fed-logo.jpg" alt="FED - Funding Partner" class="footer-logo-partner">
+                </div>
+                <div class="footer-links">
+                    <a href="privacy-policy.html" data-i18n="footer-privacy">Privacy Policy</a>
+                    <a href="accessibility.html" data-i18n="footer-accessibility">Accessibility</a>
+                </div>
+                <p class="footer-copyright">&copy; 2026 Fortitude Learning Box. <span data-i18n="footer-rights">All
+                        Rights Reserved.</span></p>
 
-            // Add visible class to cards after scrolling
-            setTimeout(() => {
-                const cards = document.querySelectorAll('.card');
-                cards.forEach((card, index) => {
-                    setTimeout(() => {
-                        card.classList.add('visible');
-                    }, index * 200); // Staggered animation
-                });
-            }, 500); // Delay after scroll
-        });
+            </div>
+        </div>
+    </footer>
 
-        // Intersection Observer for cards
-        const cards = document.querySelectorAll('.card');
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('visible');
-                }
-            });
-        }, { threshold: 0.1 });
+    <!-- Lightbox Modal -->
+    <div id="lightbox" class="lightbox" role="dialog" aria-modal="true" aria-label="Image viewer">
+        <button class="lightbox-close" aria-label="Close lightbox">&times;</button>
+        <button class="lightbox-prev" aria-label="Previous image"><i class="fas fa-chevron-left"></i></button>
+        <button class="lightbox-next" aria-label="Next image"><i class="fas fa-chevron-right"></i></button>
+        <img src="" alt="" class="lightbox-img">
+    </div>
 
-        cards.forEach(card => observer.observe(card));
-    </script>
+    <script src="i18n.js"></script>
+    <script src="gallery.js"></script>
+    <script src="cookies.js"></script>
+    <script src="script.js"></script>
 </body>
-<footer style="background-color: #333; color: white; text-align: center; padding: 20px;">
-    <p>All Rights Reserved by &copy; 2025 FED - Foundation for Education & Development.</p>
-</footer>
 
 </html>
